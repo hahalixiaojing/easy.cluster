@@ -16,6 +16,9 @@ import easy.rpc.http.support.DefaultAPIAddressConverter;
 import easy.rpc.http.support.DefaultOkHttp;
 import easy.rpc.http.support.DefaultParameterConverter;
 import easy.rpc.http.support.DefaultReturnConvert;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisPubSub;
 
 public class PRCTest {
 
@@ -77,6 +80,8 @@ public class PRCTest {
 
 		Assert.assertEquals(2, users.length);
 	}
+	
+	
 	@Test
 	public void realTest() {
 		User u1 = new User();
