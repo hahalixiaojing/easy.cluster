@@ -35,7 +35,7 @@ public class RedisRegistryDirectory implements IDirectory, IRefreshDirectoryNode
 	}
 
 	@Override
-	public void refresh(Node[] nodes) {
+	public void refresh(List<Node> nodes) {
 		lock.writeLock().lock();
 		try {
 			this.nodeList.clear();
