@@ -1,8 +1,7 @@
 package easy.rpc.http;
 
-import java.net.URL;
-
 import easy.cluster.IInvoker;
+import easy.cluster.Node;
 import easy.cluster.invoker.Invocation;
 
 public class HttpInvoker implements IInvoker {
@@ -28,10 +27,10 @@ public class HttpInvoker implements IInvoker {
 	}
 
 	@Override
-	public <T> T doInvoke(URL url, Invocation invocation, Class<T> cls)
+	public <T> T doInvoke(Node node, Invocation invocation, Class<T> cls)
 			throws Exception {
 
-		String apiAddress = this.apiAddressConvert.convert(invocation, url);
+		String apiAddress = this.apiAddressConvert.convert(invocation, node);
 
 		String parameter = this.parameterConverter.convert(
 				invocation.getMethod(), invocation.getArgs());

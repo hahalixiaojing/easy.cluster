@@ -1,6 +1,5 @@
 package easy.cluster;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -62,15 +61,15 @@ public class ForkingClusterTest {
 
 					@SuppressWarnings("unchecked")
 					@Override
-					public <T> T doInvoke(URL url, Invocation invocation,
+					public <T> T doInvoke(Node url, Invocation invocation,
 							Class<T> cls) throws Exception {
-						if (url.toString().equals("http://a.com.3")
-								|| url.toString().equals("http://a.com.2")) {
+						if (url.getAddress().equals("http://a.com.3")
+								|| url.getAddress().equals("http://a.com.2")) {
 							System.out.println(url.toString());
 							throw new Exception();
 						}
 
-						return (T) new StringResponse(url.toString());
+						return (T) new StringResponse(url.getAddress());
 					}
 				}, StringResponse.class, null);
 

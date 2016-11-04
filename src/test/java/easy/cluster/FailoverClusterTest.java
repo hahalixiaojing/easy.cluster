@@ -1,6 +1,5 @@
 package easy.cluster;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -61,9 +60,9 @@ public class FailoverClusterTest {
 
 					@SuppressWarnings("unchecked")
 					@Override
-					public <T> T doInvoke(URL url, Invocation invocation,
+					public <T> T doInvoke(Node node, Invocation invocation,
 							Class<T> cls) throws Exception {
-						return (T) new StringResponse(url.toString());
+						return (T) new StringResponse(node.getAddress());
 					}
 
 				}, StringResponse.class, null);

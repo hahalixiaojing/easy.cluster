@@ -1,6 +1,5 @@
 package easy.cluster.support;
 
-import java.net.URL;
 
 import easy.cluster.ICluster;
 import easy.cluster.IDirectory;
@@ -31,6 +30,6 @@ public class FailfastCluster implements ICluster {
 
 		Node node = loadbanlance.select(directory.getNodes(), invocation);
 
-		return invoker.doInvoke(new URL(node.getAddress()), invocation, cls);
+		return invoker.doInvoke(node, invocation, cls);
 	}
 }

@@ -1,6 +1,5 @@
 package easy.cluster.support;
 
-import java.net.URL;
 
 import easy.cluster.ICluster;
 import easy.cluster.IDirectory;
@@ -29,7 +28,7 @@ public class FailsafeCluster implements ICluster {
 		Node node = loadbanlance.select(directory.getNodes(), invocation);
 		
 		try{
-			return invoker.doInvoke(new URL(node.getAddress()), invocation, cls);
+			return invoker.doInvoke(node, invocation, cls);
 		}
 		catch(Exception e){
 			return null;

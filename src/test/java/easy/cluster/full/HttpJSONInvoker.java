@@ -1,7 +1,6 @@
 package easy.cluster.full;
 
 import java.lang.reflect.Array;
-import java.net.URL;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -12,6 +11,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import easy.cluster.IInvoker;
+import easy.cluster.Node;
 import easy.cluster.invoker.Invocation;
 
 public class HttpJSONInvoker implements IInvoker {
@@ -35,12 +35,12 @@ public class HttpJSONInvoker implements IInvoker {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T doInvoke(URL url, Invocation invocation,Class<T> cls
+	public <T> T doInvoke(Node node, Invocation invocation,Class<T> cls
 			) throws Exception {
 
 		String json = JSON.toJSONString(invocation.getArgs()[0]);
 
-		String u = url.toString()
+		String u = node.getAddress()
 				+ path(invocation.getServiceName(), invocation.getMethodName());
 
 		String jsondata = this.http.execute(u, json);

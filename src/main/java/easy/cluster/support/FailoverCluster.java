@@ -1,6 +1,5 @@
 package easy.cluster.support;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +47,7 @@ public class FailoverCluster implements ICluster {
 
 				invokedNodes.add(node);
 
-				return invoker.doInvoke(new URL(node.getAddress()), invocation, cls);
+				return invoker.doInvoke(node, invocation, cls);
 			} catch (Exception e) {
 				if (retries > defaultRetries) {
 					throw e;

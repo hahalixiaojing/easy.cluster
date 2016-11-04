@@ -2,8 +2,9 @@ package easy.rpc.http;
 
 import java.net.URL;
 
+import easy.cluster.Node;
 import easy.cluster.invoker.Invocation;
 
 public interface IAPIAddressConverter {
-	String convert(Invocation invocaton,URL url);
+	String convert(Invocation invocaton,Node node);
 }

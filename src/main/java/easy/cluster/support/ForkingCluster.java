@@ -1,6 +1,5 @@
 package easy.cluster.support;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -61,7 +60,7 @@ public class ForkingCluster implements ICluster {
 			Callable<T> s = new Callable<T>() {
 				@Override
 				public T call() throws Exception {
-					return invoker.doInvoke(new URL(node.getAddress()), invocation,
+					return invoker.doInvoke(node, invocation,
 							cls);
 				}
 			};
