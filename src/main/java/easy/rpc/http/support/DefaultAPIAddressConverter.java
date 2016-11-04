@@ -16,7 +16,6 @@ public class DefaultAPIAddressConverter implements IAPIAddressConverter {
 			urlPattern = invocaton.getMethod().getDeclaringClass()
 					.getAnnotation(URLPattern.class);
 		}
-
 		String url = urlPattern.url().replace("${address}", node.getAddress())
 				.replace("${port}", node.getPort());
 

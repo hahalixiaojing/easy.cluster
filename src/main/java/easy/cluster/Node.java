@@ -5,7 +5,7 @@ public class Node {
 	private String address;
 	private int weight;
 	private boolean enabled;
-	private String port;
+	private String port = "";
 
 	public String getService() {
 		return service;
@@ -42,7 +42,7 @@ public class Node {
 				.equals(node.getAddress().toLowerCase())) {
 			return false;
 		}
-		if(!this.getPort().equals(node.getPort())){
+		if (!this.getPort().equals(node.getPort())) {
 			return false;
 		}
 		return true;
@@ -57,19 +57,17 @@ public class Node {
 	}
 
 	public String getPort() {
-		return port;
+		return port == null ? "" : port;
 	}
 
 	public void setPort(String port) {
 		this.port = port;
 	}
 
-	
 	public boolean getEnabled() {
 		return enabled;
 	}
 
-	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
