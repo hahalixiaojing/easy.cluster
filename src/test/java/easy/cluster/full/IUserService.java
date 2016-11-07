@@ -4,18 +4,21 @@ import easy.cluster.IService;
 import easy.cluster.annoation.Cluster;
 import easy.rpc.http.HttpInvoker;
 import easy.rpc.http.annonation.Param;
+import easy.rpc.http.annonation.RPC;
 import easy.rpc.http.annonation.URLPattern;
 
-@URLPattern(url="http://${address}:${port}/")
+@URLPattern(url = "http://${address}:${port}/")
+@RPC(name = HttpInvoker.NAME)
 public interface IUserService extends IService {
 
-	@Cluster(invoker = HttpJSONInvoker.NAME)
+	@Cluster
+	@RPC(name = HttpJSONInvoker.NAME)
 	User getUser(@Param(name = "id") Id id);
 
-	@Cluster(invoker = HttpJSONInvoker.NAME)
+	@Cluster
 	User[] getUsers(@Param(name = "id") Id id);
 
-	@Cluster(invoker = HttpInvoker.NAME)
+	@Cluster
 	User[] testUsers(@Param(name = "user") User user,
 			@Param(name = "users") User[] users, @Param(name = "id") Integer id);
 }

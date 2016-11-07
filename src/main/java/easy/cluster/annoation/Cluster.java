@@ -11,5 +11,4 @@ public @interface Cluster {
 	String cluster() default "FailoverCluster" ;
 	String loadbalance() default "RandomLoadBalance";
 	String service() default "";
-	String invoker();
 }
