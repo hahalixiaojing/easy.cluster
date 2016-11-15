@@ -2,9 +2,12 @@ package easy.cluster.full;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 import org.junit.*;
+
 import easy.cluster.IDirectory;
 import easy.cluster.Node;
 import easy.cluster.ServiceFactory;
@@ -28,10 +31,12 @@ public class PRCTest {
 		Node node1 = new Node();
 		node1.setAddress("http://192.168.1.1:6935");
 		node1.setEnabled(true);
+		node1.setWeight(5000);
 
 		Node node2 = new Node();
 		node2.setAddress("http://localhost:8112/rograndec.act.web/consul");
 		node2.setEnabled(true);
+		node2.setWeight(9999);
 
 		List<Node> nodes = new ArrayList<>();
 		nodes.add(node1);
@@ -66,6 +71,7 @@ public class PRCTest {
 		DirectoryFactory.register(directory);
 
 	}
+
 	@Test
 	public void InvokerTest() throws Exception {
 		User user = sf.getService(IUserService.class).getUser(new Id("1"));
@@ -77,8 +83,15 @@ public class PRCTest {
 
 		Assert.assertEquals(2, users.length);
 	}
-	
-	
+
+	@Test
+	public void consistenHashTest() {
+
+		Random r = new Random();
+
+		sf.getService(IUserService.class).getUser1(r.nextLong());
+	}
+
 	@Test
 	public void realTest() {
 		User u1 = new User();

@@ -12,6 +12,8 @@ public abstract class LoadBalanceFactory {
 
 	static {
 		loadbalance.put(RandomLoadBalance.NAME, new RandomLoadBalance());
+		loadbalance.put(ConsistentHashLoadBalance.NAME,
+				new ConsistentHashLoadBalance(new DefaultConsistenHashNode()));
 	}
 
 	public static void register(ILoadBalance balance) {

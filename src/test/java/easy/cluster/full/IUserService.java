@@ -2,6 +2,8 @@ package easy.cluster.full;
 
 import easy.cluster.IService;
 import easy.cluster.annoation.Cluster;
+import easy.cluster.annoation.ConsistentHashKeyParam;
+import easy.cluster.loadbalance.ConsistentHashLoadBalance;
 import easy.rpc.http.HttpInvoker;
 import easy.rpc.http.annonation.Param;
 import easy.rpc.http.annonation.RPC;
@@ -14,6 +16,10 @@ public interface IUserService extends IService {
 	@Cluster
 	@RPC(name = HttpJSONInvoker.NAME)
 	User getUser(@Param(name = "id") Id id);
+
+	@Cluster(loadbalance = ConsistentHashLoadBalance.NAME)
+	@RPC(name = HttpJSONInvoker.NAME)
+	User getUser1(@ConsistentHashKeyParam @Param(name = "id") Long id);
 
 	@Cluster
 	User[] getUsers(@Param(name = "id") Id id);

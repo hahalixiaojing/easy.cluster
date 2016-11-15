@@ -24,6 +24,7 @@ public class RandomLoadBalanceTest {
 		node1.setService("test");
 		node1.setPort("135");
 		node1.setWeight(weight);
+		node1.setAddress(ip);
 
 		return node1;
 	}
