@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import easy.cluster.ICluster;
 import easy.cluster.IDirectory;
+import easy.cluster.IFilterChain;
 import easy.cluster.IInvoker;
 import easy.cluster.ILoadBalance;
 import easy.cluster.Node;
+import easy.cluster.filter.DefaultFilterChain;
 import easy.cluster.invoker.Invocation;
 
 /**
@@ -60,8 +62,8 @@ public class ForkingCluster implements ICluster {
 			Callable<T> s = new Callable<T>() {
 				@Override
 				public T call() throws Exception {
-					return invoker.doInvoke(node, invocation,
-							cls);
+					
+					return new DefaultFilterChain(invocation.getFilters(), invoker).doFilter(node, invocation, cls);
 				}
 			};
 			tasks.add(s);

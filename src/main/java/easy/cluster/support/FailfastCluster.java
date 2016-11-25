@@ -1,11 +1,11 @@
 package easy.cluster.support;
 
-
 import easy.cluster.ICluster;
 import easy.cluster.IDirectory;
 import easy.cluster.IInvoker;
 import easy.cluster.ILoadBalance;
 import easy.cluster.Node;
+import easy.cluster.filter.DefaultFilterChain;
 import easy.cluster.invoker.Invocation;
 
 /**
@@ -24,12 +24,11 @@ public class FailfastCluster implements ICluster {
 	};
 
 	@Override
-	public <T> T invoke(IDirectory directory, Object[] paramter,
-			ILoadBalance loadbanlance, IInvoker invoker, Class<T> cls,
-			Invocation invocation) throws Exception {
+	public <T> T invoke(IDirectory directory, Object[] paramter, ILoadBalance loadbanlance, IInvoker invoker,
+			Class<T> cls, Invocation invocation) throws Exception {
 
 		Node node = loadbanlance.select(directory.getNodes(), invocation);
 
-		return invoker.doInvoke(node, invocation, cls);
+		return new DefaultFilterChain(invocation.getFilters(), invoker).doFilter(node, invocation, cls);
 	}
 }

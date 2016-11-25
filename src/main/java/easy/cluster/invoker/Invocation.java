@@ -2,17 +2,21 @@ package easy.cluster.invoker;
 
 import java.lang.reflect.Method;
 
+import easy.cluster.IFilter;
+
 public class Invocation {
 	private String clusterName;
 	private String loadbalanceName;
 	private String invoker;
 	private String serviceName;
 	private String methodName;
+	private String monitorDataWriter;
 	private Method method;
 	private Object[] args;
+	private IFilter[] filters;
 
 	public Invocation(String clusterName, String loadbalanceName,
-			String invoker, String serviceName, String methodName,Method m ,Object[] args) {
+			String invoker, String serviceName, String methodName,Method m ,Object[] args,IFilter[] filters,String monitorDataWriter) {
 
 		this.setClusterName(clusterName);
 		this.setLoadbalanceName(loadbalanceName);
@@ -21,6 +25,8 @@ public class Invocation {
 		this.setMethodName(methodName);
 		this.setMethod(m);
 		this.setArgs(args);
+		this.setFilters(filters);
+		this.setMonitorDataWriter(monitorDataWriter);
 	}
 
 	public String getClusterName() {
@@ -65,5 +71,21 @@ public class Invocation {
 	}
 	protected void setArgs(Object[] args) {
 		this.args = args;
+	}
+
+	public IFilter[] getFilters() {
+		return filters;
+	}
+
+	protected void setFilters(IFilter[] filters) {
+		this.filters = filters;
+	}
+
+	public String getMonitorDataWriter() {
+		return monitorDataWriter;
+	}
+
+	protected void setMonitorDataWriter(String monitorDataWriter) {
+		this.monitorDataWriter = monitorDataWriter;
 	}
 }

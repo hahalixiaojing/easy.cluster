@@ -9,6 +9,7 @@ import easy.cluster.IDirectory;
 import easy.cluster.IInvoker;
 import easy.cluster.ILoadBalance;
 import easy.cluster.Node;
+import easy.cluster.filter.DefaultFilterChain;
 import easy.cluster.invoker.Invocation;
 
 /**
@@ -28,9 +29,8 @@ public class FailoverCluster implements ICluster {
 	}
 
 	@Override
-	public <T> T invoke(IDirectory directory, Object[] paramter,
-			ILoadBalance loadbanlance, IInvoker invoker, Class<T> cls,
-			Invocation invocation) throws Exception {
+	public <T> T invoke(IDirectory directory, Object[] paramter, ILoadBalance loadbanlance, IInvoker invoker,
+			Class<T> cls, Invocation invocation) throws Exception {
 
 		List<Node> invokedNodes = new ArrayList<>();
 
@@ -39,15 +39,14 @@ public class FailoverCluster implements ICluster {
 		for (int i = 0; i <= defaultRetries; i++) {
 			retries++;
 			try {
-				List<Node> subListNode = directory.getNodes().stream()
-						.filter(n -> !invokedNodes.contains(n))
+				List<Node> subListNode = directory.getNodes().stream().filter(n -> !invokedNodes.contains(n))
 						.collect(Collectors.toList());
 
 				Node node = loadbanlance.select(subListNode, invocation);
 
 				invokedNodes.add(node);
 
-				return invoker.doInvoke(node, invocation, cls);
+				return new DefaultFilterChain(invocation.getFilters(), invoker).doFilter(node, invocation, cls);
 			} catch (Exception e) {
 				if (retries > defaultRetries) {
 					throw e;
