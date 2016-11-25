@@ -1,4 +1,4 @@
-package easy.cluster.filter;
+package easy.cluster.filter.monitor;
 
 public interface IMonitorStatDataWriter {
 	void write(MonitorStatData data);

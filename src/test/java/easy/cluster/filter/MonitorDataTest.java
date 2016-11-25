@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import easy.cluster.filter.monitor.MonitorData;
+
 import org.junit.*;
 
 public class MonitorDataTest {

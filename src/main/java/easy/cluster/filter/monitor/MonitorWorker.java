@@ -1,4 +1,4 @@
-package easy.cluster.filter;
+package easy.cluster.filter.monitor;
 
 import java.util.ArrayList;
 import java.util.Comparator;

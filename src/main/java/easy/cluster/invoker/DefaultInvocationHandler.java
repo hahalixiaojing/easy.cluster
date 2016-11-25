@@ -8,6 +8,7 @@ import easy.cluster.IInvoker;
 import easy.cluster.ILoadBalance;
 import easy.cluster.annoation.Cluster;
 import easy.cluster.annoation.Filter;
+import easy.cluster.annoation.Monitor;
 import easy.cluster.directory.DirectoryFactory;
 import easy.cluster.IDirectory;
 import easy.cluster.IFilter;
@@ -24,11 +25,12 @@ public class DefaultInvocationHandler implements InvocationHandler {
 		String clusterName = annCluster.cluster();
 		String loadbalanceName = annCluster.loadbalance();
 		String invoker = this.getInvoker(method);
-		String serviceName = getServiceName(method.getDeclaringClass().getName(), annCluster.service());
+		String serviceName = this.getServiceName(method.getDeclaringClass().getName(), annCluster.service());
 		String methodName = method.getName();
+		String monitorWriterName = this.getMonitorWriterName(method);
 		IFilter[] filters = this.getFilters(method);
 		Invocation invocation = new Invocation(clusterName, loadbalanceName, invoker, serviceName, methodName, method,
-				args, filters,"");
+				args, filters, monitorWriterName);
 
 		ICluster cluster = ClusterFactory.getCluser(clusterName);
 		ILoadBalance loadbalance = LoadBalanceFactory.getloadBalance(loadbalanceName);
@@ -67,5 +69,16 @@ public class DefaultInvocationHandler implements InvocationHandler {
 			return clsName;
 		}
 		return aliasname;
+	}
+
+	private String getMonitorWriterName(Method m) {
+		Monitor monitor = m.getAnnotation(Monitor.class);
+		if (monitor == null) {
+			monitor = m.getDeclaringClass().getAnnotation(Monitor.class);
+		}
+		if (monitor == null) {
+			return null;
+		}
+		return monitor.writerName();
 	}
 }

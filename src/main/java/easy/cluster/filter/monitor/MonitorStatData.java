@@ -1,4 +1,4 @@
-package easy.cluster.filter;
+package easy.cluster.filter.monitor;
 
 /**
  * 监控发送数据
